@@ -1,8 +1,8 @@
-import EditFormEditor from '@/app/components/edit-form-editor'
-import { db } from '@/app/db'
-import React from 'react'
+import EditTodoEditor from "@/app/components/editTodoEditor"
+import { db } from "@/app/db"
+import { notFound } from "next/navigation"
 
-const EditFormPage = async (props: any) => {
+export default async function EditTodoPage(props: any) {
 
   const todo = await db.todos.findFirst({
     where: {
@@ -10,11 +10,13 @@ const EditFormPage = async (props: any) => {
     }
   })
 
+  if (!todo) {
+    return notFound()
+  }
+
   return (
     <div>
-      <EditFormEditor todo={todo} />
+      <EditTodoEditor todo={todo} />
     </div>
   )
 }
-
-export default EditFormPage

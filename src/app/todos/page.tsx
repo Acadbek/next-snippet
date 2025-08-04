@@ -7,6 +7,7 @@ const Todos = async () => {
 
   return (
     <div className="flex flex-col gap-3">
+      <Link className="border p-2 w-[150px]" href='/todos/new'>Create todo</Link>
       {todos.map((todo) => (
         <Link
           href={`/todos/${String(todo.id)}`}
@@ -16,8 +17,6 @@ const Todos = async () => {
           <p className="text-lg">{todo.title}</p>
         </Link>
       ))}
-
-      <Link href='/todos/new'>Create new todo</Link>
     </div>
   );
 };
