@@ -1,26 +1,18 @@
+'use client'
+
 import { db } from "@/app/db";
 import { redirect } from "next/navigation";
-import React from "react";
+import React, { useActionState } from "react";
+// import { useActionState } from "react-dom";
+import * as actions from '@/app/actions'
 
 const CreateTodoPage = () => {
-  const createNewTodo = async (formData: FormData) => {
-    "use server";
-
-    const title = formData.get("title") as string;
-    const code = formData.get("code") as string;
-
-    await db.todos.create({
-      data: {
-        title,
-        code,
-      },
-    });
-
-    redirect("/");
-  };
+  const [formState, action] = useActionState(actions.createNewTodo, {
+    message: ''
+  })
 
   return (
-    <form action={createNewTodo} className="flex flex-col gap-4 mt-30">
+    <form action={action} className="flex flex-col gap-4 mt-30">
       <input
         className="border p-3"
         name="title"
@@ -36,6 +28,7 @@ const CreateTodoPage = () => {
       <button className="border bg-blue-500 text-white p-3" type="submit">
         Create
       </button>
+      {formState.message}
     </form>
   );
 };
