@@ -28,15 +28,15 @@ export const createNewTodo = async (
     const title = formData.get("title") as string;
     const code = formData.get("code") as string;
 
-    if (title.trim().length < 3 || typeof title !== "string") {
+    if (typeof title !== "string" || title.trim().length <= 3) {
       return {
-        message: "Title notogri formatda kiritildi!",
+        message: "Title notogri kiritildi",
       };
     }
 
-    if (code.trim().length < 1 || typeof code !== "string") {
+    if (typeof code !== "string" || code.trim().length <= 10) {
       return {
-        message: "Code notogri formatda kiritildi!",
+        message: "Code notogri kiritildi",
       };
     }
 
@@ -46,10 +46,6 @@ export const createNewTodo = async (
         code,
       },
     });
-
-    redirect("/");
-
-    // throw new Error("failed to save to db");
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
@@ -57,8 +53,10 @@ export const createNewTodo = async (
       };
     } else {
       return {
-        message: "Something went wrong",
+        message: "Serverda xatolik",
       };
     }
   }
+
+  redirect("/todos");
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { db } from "../db";
 import Link from "next/link";
+export const dynamic = 'force-dynamic';
 
 const Todos = async () => {
   const todos = await db.todos.findMany();
