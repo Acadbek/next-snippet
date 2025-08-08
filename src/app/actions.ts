@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { db } from "./db";
+import { revalidatePath } from "next/cache";
 
 export async function editTodo(id: number, code: string) {
   await db.todos.update({
@@ -57,6 +58,6 @@ export const createNewTodo = async (
       };
     }
   }
-
+  revalidatePath("/todos");
   redirect("/todos");
 };

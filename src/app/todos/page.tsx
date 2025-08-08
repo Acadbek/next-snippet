@@ -1,7 +1,16 @@
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 5000
+
+// SSG - Server side generation
+// SSR - Server side rendiring
+
+// Timed based
+// On demand
+// Disable cache
+
 import React from "react";
 import { db } from "../db";
 import Link from "next/link";
-export const dynamic = 'force-dynamic';
 
 const Todos = async () => {
   const todos = await db.todos.findMany();

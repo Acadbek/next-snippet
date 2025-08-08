@@ -1,9 +1,12 @@
 import { db } from "@/app/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import * as actions from '@/app/actions'
+import * as actions from '@/app/actions';
 
 const SlugPage = async (props: any) => {
+
+  await new Promise((r) => setTimeout(r, 2000))
+
   const todo = await db.todos.findFirst({
     where: {
       id: +props.params.id,
@@ -15,7 +18,6 @@ const SlugPage = async (props: any) => {
   }
 
   const deleteTodoAction = actions.deleteTodo.bind(null, todo.id)
-
   return (
     <>
       <div className="flex items-center justify-between">
@@ -38,3 +40,11 @@ const SlugPage = async (props: any) => {
 };
 
 export default SlugPage;
+
+export async function generateStaticParams() {
+  const todos = await db.todos.findMany()
+
+  return todos.map((todo) => ({
+    id: todo.id.toString(),
+  }));
+}
